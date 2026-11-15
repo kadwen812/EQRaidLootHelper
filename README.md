@@ -9,9 +9,27 @@ together so you can spend less time searching chat.
 **Read-only game integration.** No key broadcasting, game commands, or automatic
 looting. Copy buttons prepare text on the clipboard; you decide what to paste.
 
-> **Early development:** this repository is being set up. Source upload and
-> packaged downloads are not available yet. The current development version is
-> a C# WinForms application launched with Windows PowerShell 5.1, not an installer.
+## Download and install
+
+**[Download the Windows installer](https://github.com/kadwen812/EQRaidLootHelper/releases/latest/download/EQRaidLootHelper-1.0.0-Setup.exe)**
+
+1. Download **EQRaidLootHelper-1.0.0-Setup.exe** and open it.
+2. Follow the setup wizard. No administrator account is required.
+3. Launch **EQ Raid Loot Helper** from the desktop shortcut or Start menu.
+
+Requires Windows 10 version 1903 or later (including Windows 11) and .NET
+Framework 4.8 or later, which is included with these Windows versions.
+No Python, PowerShell commands, Inner Space, or controller hardware is needed.
+
+The installer is **not digitally signed**. Windows or your browser may warn
+about an unknown publisher or an uncommon download. Only download it from this
+repository's [Releases page](https://github.com/kadwen812/EQRaidLootHelper/releases/latest).
+Do not disable antivirus or security policies. A SHA-256 checksum is included
+with each release.
+
+Run a newer installer to update. Settings and reports are kept separately from
+the program and survive updates and uninstallation. Uninstall through Windows
+**Settings > Apps**. Application source is not published in this repository yet.
 
 ## What it helps with
 
@@ -26,18 +44,10 @@ looting. Copy buttons prepare text on the clipboard; you decide what to paste.
 
 ## Getting started
 
-These are the steps for running the development version once you have the
-application files.
-
-1. Use **Windows** with **Windows PowerShell 5.1**.
-2. In EverQuest, enable logging with `/log on` on the character whose log you
+1. In EverQuest, enable logging with `/log on` on the character whose log you
    want to follow. That character must receive the raid chat and rolls.
-3. Keep the application files together in a folder you can write to.
-4. Open Windows PowerShell in that folder and run:
-
-   ```powershell
-   powershell -NoProfile -STA -File .\RaidLoot.ps1
-   ```
+2. Open **EQ Raid Loot Helper**.
+3. Check that the selected character log receives the raid chat and rolls.
 
 On first run, the helper looks for running `eqgame.exe` clients and chooses the
 most recently modified character log from their install folders. An existing
@@ -120,8 +130,7 @@ before rolling for another person.
   physically rolled. Playerx must be the character looting.
 - A new random call, closure, or Clear discards any unused assignment.
 
-This requires the updated helper build; the previously running version does not
-understand these instructions.
+Included in installer version 1.0.0 and later.
 
 ## Finding your place
 
@@ -135,7 +144,10 @@ understand these instructions.
 
 ## Local data and reports
 
-Settings, main/alt mappings, and reports are stored beside the application:
+The installed application stores settings, main/alt mappings, and reports in
+`%LOCALAPPDATA%\EQRaidLootHelper`. Paste that path into File Explorer's address
+bar to open it. The PowerShell development launcher still stores data beside
+the application files; installing does not import that development data.
 
 | File or folder | Purpose |
 | --- | --- |
@@ -163,12 +175,24 @@ possible alt matches are prompts for review, not decisions.
 
 ## Development
 
-The development version uses C# WinForms and Windows PowerShell 5.1. Run the
-window-free regression checks from the application folder:
+The application uses C# WinForms and .NET Framework 4.8. With a local source
+checkout, run the window-free regression checks using Windows PowerShell 5.1:
 
 ```powershell
 powershell -NoProfile -File .\Test-RaidLoot.ps1
 ```
+
+For the development launcher, run `powershell -NoProfile -STA -File .\RaidLoot.ps1`.
+To build the executable and installer, install
+[Inno Setup 7](https://jrsoftware.org/inno-setup/downloads), then run:
+
+```powershell
+powershell -NoProfile -File .\Build.ps1
+```
+
+For a custom compiler location, pass `-InnoCompiler "C:\path\to\ISCC.exe"`.
+Only the executable, runtime configuration, license, and README enter the
+installer. Logs, settings, mappings, reports, and test fixtures are excluded.
 
 For bugs or new raid formats, use [GitHub Issues](https://github.com/kadwen812/EQRaidLootHelper/issues)
 and describe the expected result, the actual result, and an anonymized log sample.
