@@ -94,6 +94,35 @@ final-call fallback as log messages are processed.
 Recognizable calls can come from anyone in raid. **Last caller** follows whoever
 is currently running the process, rather than requiring a fixed raid leader.
 
+### Rolling for someone who asked in voice
+
+Only the **current caller** can assign a roll to someone else. The helper cannot
+hear voice chat: announce the assignment in **raid chat before rolling**.
+
+For example, while a `random 555` call is open, Dreek types:
+
+```text
+/rs rolling for Playerx
+/random 555
+/random 555
+```
+
+The first valid `0-555` roll goes to **Playerx**; the next roll goes to **Dreek
+himself**. The assignment is used once, so announce `rolling for Otherplayer`
+before rolling for another person.
+
+- Instructions from anyone except the current caller are ignored.
+- Other players' rolls do not consume the assignment. A wrong-range caller roll
+  is flagged and leaves the assignment waiting for a valid roll.
+- If Playerx already has an accepted roll, the proxy attempt is flagged as an
+  extra roll rather than giving Playerx another entry.
+- Lists and loot matching use **Playerx**, while the display/report records who
+  physically rolled. Playerx must be the character looting.
+- A new random call, closure, or Clear discards any unused assignment.
+
+This requires the updated helper build; the previously running version does not
+understand these instructions.
+
 ## Finding your place
 
 - **Sessions** follows the latest event by default. Tick earlier events to view
